@@ -25,7 +25,6 @@ public class EmployeeHibernateDao extends HibernateDaoSupport implements Employe
         }
     }
      
-    @Transactional(readOnly=false)
     public void createEmployee(final String Name){
         System.out.println("Create new employee " + Name);
         Employee emp = getHibernateTemplate().execute(new HibernateCallback<Employee>() {
@@ -33,6 +32,7 @@ public class EmployeeHibernateDao extends HibernateDaoSupport implements Employe
             public Employee doInHibernate(Session session) throws HibernateException {
                 Employee emp = new Employee();
                 emp.setName(Name);
+                emp.setContact("test");
                 session.saveOrUpdate(emp);
                 return emp;
             }
@@ -43,6 +43,7 @@ public class EmployeeHibernateDao extends HibernateDaoSupport implements Employe
     @Transactional(readOnly=false)
     public void saveEmployee(Employee emp){
         System.out.println("Create new employee " + emp);
+        emp.setContact("test");
         getHibernateTemplate().save(emp);
         System.out.println("Employee created " + emp);        
     }   
